@@ -11,9 +11,11 @@ const reducer = (state = [], action) => {
   console.log(state, action)
   switch(action.type) {
     case ADD_TODO:
-      return [{text: action.text, id: Date.now()}, ...state]; // return new state! es6: spread! (original state 변형 불가)
+      const newToDoObj = [{text: action.text, id: Date.now()}, ...state]
+      return newToDoObj; // return new state! es6: spread! (original state 변형 불가)
     case DELETE_TODO:
-      return state.filter(toDo => toDo.id !== action.id);
+      const cleaned = state.filter(toDo => toDo.id !== action.id); //splice() X -> state mutation 금지!
+      return cleaned;
     default:
       return state;
   }
@@ -37,7 +39,9 @@ const paintToDos = () => {
     ul.appendChild(li);
   })
 }
+// ********
 store.subscribe(paintToDos);
+// ********
 
 const addToDo = text => {
   return {
