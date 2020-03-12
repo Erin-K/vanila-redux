@@ -8,11 +8,10 @@ const ADD_TODO = 'ADD';
 const DELETE_TODO = 'DELETE';
 
 const reducer = (state = [], action) => {
-  console.log(action);
-  switch(action.type == ADD_TODO) {
-    case 'ADD':
-      return [];
-    case 'DELETE':
+  switch(action.type) {
+    case ADD_TODO:
+      return [...state, {text: action.text, id: Date.now()}]; // return new state! es6: spread! (original state 변형 불가)
+    case DELETE_TODO:
       return [];
     default:
       return state;
@@ -20,6 +19,7 @@ const reducer = (state = [], action) => {
 };
 
 const store = createStore(reducer);
+store.subscribe(() => console.log(store.getState()))
 
 const onSubmit = e =>{
   e.preventDefault();
