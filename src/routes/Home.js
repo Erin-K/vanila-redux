@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { actionCreators } from '../store'
 
-function Home(toDos) {
-  console.log(toDos)
+function Home({toDos, addToDo}) {
   const [text, setText] = useState('');
   function onChange(e) {
     setText(e.target.value);
@@ -10,6 +10,7 @@ function Home(toDos) {
   function onSubmit(e) {
     e.preventDefault();
     setText('');
+    addToDo(text);
   }
   return (
     <>
@@ -30,5 +31,14 @@ function mapStateToProps(state, ownProps) {
   return { toDos: state }
 }
 
-export default connect(mapStateToProps)(Home);
+function mapDispatchToProps(dispatch) {
+  console.log(dispatch);
+  return {
+    addToDo: (text) => dispatch(actionCreators.addToDo(text))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
+// export default connect(null, mapDispatchToProps)(Home);
+// export default connect(mapStateToProps)(Home);
 //connect는 Home(Component)로 보내는 prop에 추가될 수록 허용한다.
