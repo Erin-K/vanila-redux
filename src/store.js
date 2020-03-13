@@ -10,7 +10,7 @@ const addToDo = (text) => {
   }
 };
 
-const deleteToDO = (text) => {
+const deleteToDo = (text) => {
   return {
     type: DELETE,
     text
